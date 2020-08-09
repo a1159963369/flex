@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/denglu.css">
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+        }
+        function btnn(AjaxOptions,elOptions) {
+            var youname = document.getElementById("name").value;
+            var youpass = document.getElementById("pass").value;
+            var youwant = document.getElementById("sousuolan").value;
+            let array = Ajax({
+                url: "http://localhost:8080/login?username=" + youname + "&userpwd=" + youpass + "&userxs=" + youwant + "",
+                success(val) {
+                    let nums = JSON.parse(val);
+                    // console.log(array)
+                    for (var i = 0; i < nums.employees.length; i++) {
+                        addElement({
+                            parent: "show3", //在test中插入元素
+                            title: nums.employees[i].firstName + "   " + nums.employees[i].lastName
+                        });
+                    }
+                }
+            });
+        }
+        function addElement(elOptions) {
+            let {
+                color = "red",
+                width = 100,
+                parent = "show3",
+                title,
+            } = elOptions;
+            let el = document.createElement("div");
+            el.innerHTML = title;
+            el.setAttribute("style", "background-color:"+color+";width:" +width + "+px;");
+            
+            document.getElementById(parent).append(el);
+        }
+        
+        function Ajax(AjaxOptions) {
+            let { methods = "GET",
+                url,
+                success } = AjaxOptions;
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    success(xmlhttp.responseText)
+                }
+            };
+            xmlhttp.open(methods, url, false);
+            xmlhttp.send("userLogin");
+        }
+    </script>
+    <div class="show1">
+        <div class="box">
+            <div class="title">
+                <div class="title_zuo"><img src="img/logo-201305-b (1).png" alt="">
+                    <h2>欢迎登陆</h2>
+                </div>
+                <div class="title_you"><a href="#">登录页面，调查问券</a></div>
+            </div>
+            <div class="hengfu">依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号验证！ 新版《京东隐私政策》已上线，将更有利于保护您的个人隐私。</div>
+        </div>
+        <div class="center">
+            <div class="center-bg2">
+                <img src="img/4.jpg" alt="">
+                <div class="denglu">
+                    <div class="hengfu">京东不会以任何理由要求您转账汇款，谨防诈骗。</div>
+                    <div class="denglufangshi">
+                        <div id="1" class="yi" value="1">扫码登录</div>
+                        <div id="2" class="er" value="2">账户登录</div>
+                    </div>
+                    <div id="3" class="fangshi1"><img src="img/show.png" alt="">
+                        <p>打开<span>手机京东</span>扫描二维码</p>
+                    </div>
+                    <div id="4" class="fangshi2">
+                        <input id="zhanghao" type="text">
+                        <input id="mima" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <ul>
+                <li>素颜</li>
+                <li>|</li>
+                <li>温泉</li>
+                <li>|</li>
+                <li>有何不可</li>
+                <li>|</li>
+                <li>庐州月</li>
+                <li>|</li>
+                <li>断桥残雪</li>
+                <li>|</li>
+                <li>半城烟沙</li>
+                <li>|</li>
+                <li>玫瑰花的葬礼</li>
+                <li>|</li>
+                <li>清明雨上</li>
+                <li>|</li>
+                <li>飞驰与你</li>
+                <li>|</li>
+                <li>惊鸿一面</li>
+            </ul>
+            <p>Copyright © 2004-2020 京东JD.com 版权所有</p>
+        </div>
+    </div>
+    <div class="show2">
+        <div class="denglu">
+            <div class="hengfu">京东不会以任何理由要求您转账汇款，谨防诈骗。</div>
+            <div class="denglufangshi">
+                <div id="5" class="yi" value="5">扫码登录</div>
+                <div id="6" class="er" value="6">账户登录</div>
+            </div>
+
+            <div id="7" class="fangshi1"><img src="img/show.png" alt="">
+                <p>打开<span>手机京东</span>扫描二维码</p>
+            </div>
+            <div id="8" class="fangshi2">
+                <input id="name" class="zhanghao" type="text">
+                <input id="pass" class="mima" type="text">
+                <button onclick="btnn()">登录</button>
+                <input id="sousuolan" type="text">
+
+            </div>
+
+        </div>
+    </div>
+    <div id="show3">1
+
+    </div>
+    <script src="js/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#3,#4").each(function (i, v) {
+                $("#4").hide();
+                $("#1,#2").click(function () {
+                    if (this.id == (i + 1)) {
+                        $("#3,#4").hide();
+                        $("#1,#2").css("color", "black");
+                        var is = "#" + (i + 3);
+                        $(is).show();
+                        $(this).css("color", "red");
+                    }
+                })
+            })
+            $("#7,#8").each(function (i, v) {
+                $("#8").hide();
+                $("#5,#6").click(function () {
+                    if (this.id == (i + 5)) {
+                        $("#7,#8").hide();
+                        $("#5,#6").css("color", "black");
+                        var is = "#" + (i + 7);
+                        $(is).show();
+                        $(this).css("color", "red");
+                    }
+                })
+            })
+
+            $(".zhanghao").val("账号");
+            $(".mima").val("密码");
+        })
+    </script>
+
+</body>
+
+</html>
